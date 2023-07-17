@@ -1,0 +1,1146 @@
+#:import Factory kivy.factory.Factory
+
+<sp@SpinnerOption>:
+    color: 1,1,1,1
+    background_color: 0,0,0,1
+
+<MyInput@Spinner>:
+    option_cls: 'sp'
+    font_size: 24
+    size_hint: None, None
+    size: self.texture_size[0] + dp(56), dp(56)
+    background_normal: ''
+    background_color: 1, 1, 1, 1
+    border: (4, 4, 4, 4)
+    padding: (10, 10)
+    values: [str(i) for i in range(1, 100)]
+    text: '1'
+    readonly: True
+    on_text: self.text = str(int(self.text))  # converte o valor para um inteiro
+
+<CadastrosWindow>:
+    name: "cadastro"
+
+    FloatLayout:  
+        Image:
+            source: 'images/telas/tela_pacientes_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+
+        TextInput:
+            id: pacientes_filter
+            pos_hint: {"y": 0.84, "x": 0.6158583525789069}
+            size_hint: 0.13, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 22
+            hint_text: "Pesquisar..."
+            padding: 5, 5, 5, 5
+            cursor_color: 0,0,0,1
+            #on_focus: root.update_pacientes()
+            on_text: root.filter_pacientes()
+
+        Button: #botão cadastrar novo
+            pos_hint:{"x": 0.7582755966127791, "y": 0.844062947067239}
+            size_hint: 0.22, 0.0658
+            background_color: 0,0,0,0
+            on_release:
+                root.to_cadastrar_novo()
+        
+        Button: #botão suplementação
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.50}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_suple()
+        
+        Button: #botão materiais
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.25}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_materiais()
+
+        Button: #botão info
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_info()
+
+<CadastrarWindow>:
+    name: "cadastrar"
+
+    FloatLayout:  
+        Image:
+            source: 'images/telas/tela_adicionar_paciente_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+        
+        Button: #botão exit Cadastrar
+            size_hint:0.13, 0.2
+            pos_hint: {'x':0, 'top':1}
+            background_color: 1,0,1,0
+            on_release:
+                root.to_cadastro()
+        
+        Label:
+            id: reference_to_modify_file
+            text: ""
+            color: 0,0,0,0
+            background_color: 0,0,0,0
+
+        TextInput:
+            id: nome
+            pos_hint: {"x": 0.07390300230946882, "y": 0.7138769670958511}
+            cursor_color: 0,0,0,1
+            size_hint: 0.4, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+            #hint_text: "ola"
+
+        TextInput:
+            id: conjugue
+            pos_hint: {"x": 0.09083910700538876, "y": 0.6180257510729614}
+            cursor_color: 0,0,0,1
+            size_hint: 0.38, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+
+        TextInput:
+            id: cpf
+            pos_hint: {"x": 0.04695919938414165, "y": 0.5236051502145922}
+            cursor_color: 0,0,0,1
+            size_hint: 0.19, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            input_filter: "int"
+            padding: 1, 1, 1, 1
+            on_text: root.cpf_limit_mask()
+            on_focus: root.cpf_mask()
+
+        TextInput:
+            id: sus
+            pos_hint: {"x": 0.2909930715935335, "y": 0.5236051502145922}
+            cursor_color: 0,0,0,1
+            size_hint: 0.2, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 31
+            padding: 1, 1, 1, 1
+            input_filter: "int"
+            on_text: root.sus_limit_mask()
+
+        TextInput:
+            id: data_de_nascimento
+            pos_hint: {"x": 0.21170130869899922, "y": 0.4306151645207439}
+            cursor_color: 0,0,0,1
+            size_hint: 0.15, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+            on_text: root.datan_mask()
+
+        TextInput:
+            id: dependentes
+            pos_hint: {"x": 0.14164742109314857, "y": 0.33619456366237477}
+            cursor_color: 0,0,0,1
+            size_hint: 0.3, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+        
+        TextInput:
+            id: telefone
+            pos_hint: {"x": 0.09853733641262509, "y": 0.23891273247496425}
+            cursor_color: 0,0,0,1
+            size_hint: 0.2, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+            input_filter: "int"
+            on_text: root.formatar_number()
+
+        TextInput:
+            id: telefone_fixo
+            pos_hint: {"x": 0.1447267128560431, "y": 0.14449213161659513}
+            cursor_color: 0,0,0,1
+            size_hint: 0.16, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+            input_filter: "int"
+            on_text: root.formatar_fnumber()
+
+        TextInput:
+            id: ca
+            pos_hint: {"x": 0.03849114703618168, "y": 0.05007153075822601}
+            cursor_color: 0,0,0,1
+            size_hint: 0.45, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            hint_text: "Mama, Pulmão, Colorretal, Próstata, Pele"
+            font_size: 32
+            padding: 1, 1, 1, 1
+        
+        TextInput:
+            id: data_de_cadastro
+            pos_hint: {"x": 0.49037721324095457, "y": 0.14449213161659513}
+            cursor_color: 0,0,0,1
+            size_hint: 0.15, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+            on_text: root.datac_mask()
+
+        Button:
+            pos_hint: {"x": 0.51537721324095457, "y": 0.07249213161659513}
+            size_hint: 0.1 , 0.063
+            background_color: 0,0,0,0
+            on_release: root.insert_today_date()
+        
+        Image:
+            source: "images/botões/hoje.png"
+            pos_hint: {"x": 0.51537721324095457, "y": 0.07249213161659513}
+            size_hint: 0.1 , 0.063
+        
+        TextInput:
+            id: rua
+            pos_hint: {"x": 0.5573518090839107, "y": 0.6612360515021459}
+            cursor_color: 0,0,0,1
+            size_hint: 0.3734, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+        
+        TextInput:
+            id: bairro
+            pos_hint: {"x": 0.5781370284834488, "y": 0.5271888412017167}
+            cursor_color: 0,0,0,1
+            size_hint: 0.35, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 1, 1, 1, 1
+
+        Button:
+            id: acompanhamento_button
+            size_hint: 0.13, 0.06
+            pos_hint: {"x": 0.43256889915319475, "y": 0.23462088698140204}
+            background_color: 0,0,0,0
+            on_release:
+                root.change_button(acompanhamento_image, "acompanhamento")
+
+        Image:
+            id: acompanhamento_image
+            source: 'images/botões/botão acompanhamento off.png'
+            size_hint:0.13, 0.06
+            pos_hint: {"x": 0.43256889915319475, "y": 0.23462088698140204}
+            border: 0,0,0,0
+
+        Button:
+            id: cirurgia
+            size_hint: 0.13, 0.06
+            pos_hint: {"x": 0.56556889915319475, "y": 0.23462088698140204}
+            background_color: 0,0,0,0
+            on_release:
+                root.change_button(cirurgia_image, "cirurgia")
+
+        Image:
+            id: cirurgia_image
+            source: 'images/botões/botão cirurgia off.png'
+            size_hint:0.13, 0.06
+            pos_hint: {"x": 0.56556889915319475, "y": 0.23462088698140204}
+            border: 0,0,0,0
+
+        Button:
+            id: quimioteriapia
+            size_hint: 0.13, 0.06
+            pos_hint: {"x": 0.69856889915319475, "y": 0.23462088698140204}
+            background_color: 0,0,0,0
+            on_release:
+                root.change_button(quimioterapia_image, "quimioterapia")
+
+        Image:
+            id: quimioterapia_image
+            source: 'images/botões/botão quimioterapia off.png'
+            size_hint:0.13, 0.06
+            pos_hint: {"x": 0.69856889915319475, "y": 0.23462088698140204}
+            border: 0,0,0,0
+            
+
+        Button:
+            id: radioterapia
+            size_hint: 0.13, 0.06
+            pos_hint: {"x": 0.83156889915319475, "y": 0.23462088698140204}
+            background_color: 0,0,0,0
+            on_release:
+                root.change_button(radioterapia_image, "radioterapia")
+            
+
+        Image:
+            id: radioterapia_image
+            source: 'images/botões/botão radioterapia off.png'
+            size_hint:0.13, 0.06
+            pos_hint: {"x": 0.83156889915319475, "y": 0.23462088698140204}
+            border: 0,0,0,0
+
+        Spinner:
+            id: cidade
+            text: "Selecione..."
+            font_size: 32
+            values: ('Campos Gerais', 'Campo do Meio', 'Zona Rural')
+            color: 0,0,0,1
+            background_normal: ''
+            background_down: ''
+            pos_hint: {"x": 0.5842956120092379, "y": 0.3918497854077253}
+            size_hint: 0.2, 0.06
+            sync_height: True
+            option_cls: Factory.sp
+
+        TextInput:
+            id: numero
+            pos_hint: {"x": 0.8791377983063895, "y": 0.3918497854077253}
+            cursor_color: 0,0,0,1
+            size_hint: 0.0565, 0.06
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            input_filter: "int"
+            padding: 1, 1, 1, 1
+        
+        Button:
+            size_hint: 0.235, 0.1092
+            pos_hint: {"x": 0.7367205542725174, "y": 0.0414878397711016}
+            background_color: 0,0,0,0
+            on_release: root.save_data()
+
+<SuplementaçãoWindow>:
+    name: "suplementação"
+
+    FloatLayout:
+        Image:
+            source: 'images/telas/tela_suplementação_estoque_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+        
+        Button: #botão adicionarestoque
+            pos_hint:{"x": 0.7582755966127791, "y": 0.844062947067239}
+            size_hint: 0.22, 0.0658
+            background_color: 0,0,0,0
+            on_release:
+                root.to_adicionar_estoque()
+
+        Button: #Botão para tela enviar suplementação
+            pos_hint:{"x": 0.633405696689 ,"y":0.7304749642346}
+            size_hint: 0.444, 0.0675
+            background_color: 0,0,0,0
+            on_release:
+                root.to_enviar_suplementação()
+
+        Button: #botão cadastro
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.75}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_cadastro()
+        
+        Button: #botão materiais
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.25}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_materiais()
+
+        Button: #botão info
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_info()
+
+<EnviarSuplementaçãoWindow>:
+    name: "enviarsuplementação"
+
+    FloatLayout:
+        Image:
+            source: 'images/telas/tela_suplementação_enviar_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+
+        TextInput:
+            id: cesta_basica_paciente
+            pos_hint: {"x": 0.2690078521939954, "y": 0.5150214592274678}
+            cursor_color: 0,0,0,1
+            size_hint: 0.228, 0.057
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 20
+            padding: 8, 8, 8, 8
+            on_focus: root.open_scrollview_1()
+            on_text: root.paciente_filter_1()
+
+        ScrollView:
+            id: paciente_choicer_cesta_basica
+            pos_hint: {"x": 0.2690078521939954, "y": 0.3150214592274678}
+            size_hint: 0.228, 0
+            background_color: 0,0,0,1
+            z: 1
+
+        TextInput:
+            id: suplementação_unica_paciente
+            pos_hint: {"x": 0.2690078521939954, "y": 0.320594592274678}
+            cursor_color: 0,0,0,1
+            size_hint: 0.228, 0.057
+            opacity: 1
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 20
+            padding: 8, 8, 8, 8
+            z: -1
+            on_focus: root.open_scrollview_2()
+            on_text: root.paciente_filter_2()
+
+        ScrollView:
+            id: paciente_choicer_suplementação_unica
+            pos_hint: {"x": 0.2690078521939954, "y": 0.120594592274678}
+            size_hint:  0.228, 0
+            background_color: 0,0,0,1
+
+        TextInput:
+            id: suplementação_unica_suplementação
+            pos_hint: {"x": 0.2690078521939954, "y": 0.215594592274678}
+            cursor_color: 0,0,0,1
+            size_hint: 0.228, 0.057
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 20
+            padding: 8, 8, 8, 8
+            on_focus: root.open_scrollview_3()
+            on_text: root.paciente_filter_3()
+
+        ScrollView:
+            id: suplementação_choicer_suplementação_unica
+            pos_hint: {"x": 0.2690078521939954, "y": 0.015594592274678}
+            size_hint:  0.228, 0
+            background_color: 0,0,0,1
+
+        Button: #botão para abrir popup cesta
+            pos_hint:{"x": 0.5827559661277906,"y": 0.640346208869814}
+            size_hint: 0.01, 0.07
+            background_color: 0,0,0,0
+            on_press: Factory.ChoiceCestaPopup().open()
+
+        Button: #Botão check cesta basica
+            pos_hint: {"x": 0.5065434949961509, "y": 0.5105}
+            size_hint: 0.035, 0.065
+            background_normal: "images/botões/check.png"
+            on_release: root.pendentes_cesta_basica()
+
+        Button: #Botão check suplementação unica
+            pos_hint: {"x": 0.5065434949961509, "y": 0.2105}
+            size_hint: 0.035, 0.065
+            background_normal: "images/botões/check.png"
+            on_release: root.pendentes_suplementação_unica()
+
+        ScrollView:
+            id: pendentes_scrollview
+            pos_hint: {"x": 0.6127790608160123, "y": 0}
+            size_hint:  0.3872209391839877, 0.6623748211731044
+            background_color: 1,0,0,1
+            scroll_wheel_distance: 80
+        
+        Button: #Botão para tela suplementação
+            pos_hint:{"x": 0.25643033102386454,"y": 0.7310443490701002}
+            size_hint: 0.36, 0.0675
+            background_color: 0,0,0,0
+            on_release:
+                root.to_suple()
+
+        Button: #botão adicionar estoque
+            pos_hint:{"x": 0.7582755966127791, "y": 0.844062947067239}
+            size_hint: 0.22, 0.0658
+            background_color: 0,0,0,0
+            on_release:
+                root.to_adicionar_estoque()
+
+        Button: #botão cadastro
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.75}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_cadastro()
+
+        Button: #botão materiais
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.25}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_materiais()
+
+        Button: #botão info
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_info()
+
+<AdicionarEstoqueWindow>:
+    name: "adicionarestoque"
+
+    FloatLayout:  
+        Image:
+            source: 'images/telas/tela_adicionar_estoque_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+        
+        Image: #Main icon
+            id: main_icon
+            source: "images/icones/branco.png"
+            size_hint: 0.165, 0.165
+            pos_hint: {"x": 0.1181040569668976,"y": 0.5865522174535049}
+
+        Image:
+            id: saquinho
+            source: "images/icones/saquinho.png"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.3087066974595843, "y": 0.6838054363376251}
+        Button:
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.3087066974595843, "y": 0.6838054363376251}
+            background_color: 0,0,0,0
+            on_release: root.change_main_icon(saquinho)
+        
+        Image:
+            id: bolacha
+            source: "images/icones/bolacha.png"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.4087066974595843, "y": 0.6838054363376251}
+        Button:
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.4087066974595843, "y": 0.6838054363376251}
+            background_color: 0,0,0,0
+            on_release: root.change_main_icon(bolacha)
+        
+        Image:
+            id: garrafa
+            source: "images/icones/garrafa.png"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.5087066974595843, "y": 0.6838054363376251}
+        Button:
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.5087066974595843, "y": 0.6838054363376251}
+            background_color: 0,0,0,0
+            on_release: root.change_main_icon(garrafa)
+        
+        Image:
+            id: lata
+            source: "images/icones/lata.png"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.3087066974595843, "y": 0.5438054363376251}
+        Button:
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.3087066974595843, "y": 0.5438054363376251}
+            background_color: 0,0,0,0
+            on_release: root.change_main_icon(lata)
+
+        Image:
+            id: sabão
+            source: "images/icones/sabão.png"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.4087066974595843, "y": 0.5438054363376251}
+        Button:
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.4087066974595843, "y": 0.5438054363376251}
+            background_color: 0,0,0,0
+            on_release: root.change_main_icon(sabão)
+
+        Image:
+            id: creme
+            source: "images/icones/creme.png"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.5087066974595843, "y": 0.5438054363376251}
+        Button:
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.5087066974595843, "y": 0.5438054363376251}
+            background_color: 0,0,0,0
+            on_release: root.change_main_icon(creme)
+            
+        TextInput:
+            id: Alimento
+            pos_hint: {"x": 0.19630484988452657, "y": 0.335007153075823}
+            cursor_color: 0,0,0,1
+            size_hint: 0.5, 0.1
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 32
+            padding: 10, 10, 10, 10
+            hint_text: "Tipo | Marca | Tamanho"
+        
+        MyInput:
+            id: quantidade_estoque
+            pos_hint: {"x": 0.23017705927636645, "y": 0.07582260371959948}
+            color: 0, 0, 0, 1
+
+        Button: #exit
+            size_hint:0.13, 0.2
+            pos_hint: {'x':0, 'top':1}
+            background_color: 1,0,1,0
+            on_release: 
+                root.to_suple()
+
+        Button:
+            size_hint: 0.235, 0.1092
+            pos_hint: {"x": 0.7367205542725174, "y": 0.0414878397711016}
+            background_color: 0,0,0,0
+            on_release: root.save_data()
+
+<MateriaisWindow>:
+    name: "materiais"
+
+    FloatLayout:
+        Image:
+            source: 'images/telas/tela_materiais_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+        
+        Button: #botão cadastrar novo
+            pos_hint:{"x": 0.7582755966127791, "y": 0.844062947067239}
+            size_hint: 0.22, 0.0658
+            background_color: 0,0,0,0
+            on_release:
+                root.to_adicionar_material()
+
+        Button: #botão cadastro
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.75}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_cadastro()
+        
+        Button: #botão suplementação
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.50}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_suple()
+
+        Button: #botão info
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_info()
+
+<AdicionarMaterialWindow>:
+    name: "adicionarmaterial"
+
+    FloatLayout:  
+        Image:
+            source: 'images/telas/tela_adicionar_material_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+
+        Spinner:
+            id: material_type
+            text: "Selecione..."
+            font_size: 32
+            values: ('Cadeira de Banho', 'Cadeira de Roda', 'Cama', 'Muleta', 'Peruca', 'Andador')
+            color: 0,0,0,1
+            background_normal: ''
+            background_down: ''
+            pos_hint: {"x": 0.100846805234796, "y": 0.6509298998569385}
+            size_hint: 0.2, 0.06
+            sync_height: True
+            option_cls: Factory.sp
+        
+        TextInput:
+            id: doador
+            pos_hint: {"x": 0.14087759815242495, "y": 0.49642346208869814}
+            cursor_color: 0,0,0,1
+            size_hint: 0.6, 0.08
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 40
+            padding: 1, 1, 1, 1
+        
+        TextInput:
+            id: data_de_recepção
+            pos_hint: {"x": 0.3086989992301771, "y": 0.19027181688125894}
+            cursor_color: 0,0,0,1
+            size_hint: 0.2, 0.08
+            border_color: 0,0,0,1
+            multiline: False
+            font_size: 40
+            padding: 1, 1, 1, 1
+            on_text: root.datar_mask()
+        
+        Button:
+            pos_hint: {"x": 0.5286989992301771, "y": 0.19127181688125894}
+            size_hint: 0.1 , 0.075
+            background_color: 0,0,0,0
+            on_release: root.insert_today_date()
+        
+        Image:
+            source: "images/botões/hoje.png"
+            pos_hint: {"x": 0.5286989992301771, "y": 0.19127181688125894}
+            size_hint: 0.1 , 0.075
+        
+        TextInput:
+            id: emprestado
+            pos_hint: {"x": 0.2178598922247883, "y": 0.03976537911301858}
+            size_hint: 0.4, 0.07
+            background_color: 1,1,1,1
+            multiline: False
+            cursor_color: 0,0,0,1
+            font_size: 30
+            padding: 1, 1, 1, 1
+            on_focus: root.open_scrollview()
+            on_text: root.paciente_filter()
+
+        ScrollView:
+            id: paciente_choicer_add_material
+            pos_hint: {"x": 0.2178598922247883, "y": 0.11015736766809725}
+            size_hint: 0.4, 0
+            background_color: 0,0,0,1
+
+        Image:
+            id: péssimo_image
+            source: 'images/botões/botão péssimo off.png'
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.38, "y": 0.3390557939914163 }
+            border: 0,0,0,0
+        
+        Button:
+            id: péssimo
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.38, "y": 0.3390557939914163}
+            background_color: 0,0,0,0
+            on_release:
+                root.change_pessimo()
+        
+        Image:
+            id: ok_image
+            source: 'images/botões/botão ok off.png'
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.53, "y": 0.3390557939914163}
+            border: 0,0,0,0
+            
+        Button:
+            id: ok
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.53, "y": 0.3390557939914163}
+            background_color: 0,0,0,0
+            on_release:
+                root.change_ok()
+
+        Image:
+            id: perfeito_image
+            source: 'images/botões/botão perfeito off.png'
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.68, "y": 0.3390557939914163}
+            border: 0,0,0,0
+            
+        Button:
+            id: perfeito
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.68, "y": 0.3390557939914163}
+            background_color: 0,0,0,0
+            on_release:
+                root.change_perfeito()
+
+        Button: #botão exit
+            size_hint: 0.13, 0.2
+            pos_hint: {'x':0, 'top':1}
+            background_color: 1,0,1,0
+            on_release:
+                root.to_materiais()
+        
+        Button:
+            size_hint: 0.235, 0.1092
+            pos_hint: {"x": 0.7367205542725174, "y": 0.0414878397711016}
+            background_color: 0,0,0,0
+            on_release: 
+                root.save_data()
+
+<InfoWindow>:
+    name: "info"
+
+    FloatLayout:
+        Image:
+            source: 'images/telas/tela_info_imagem.png'
+            allow_stretch: True
+            keep_ratio: True
+       
+        Button: #botão cadastro
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.75}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_cadastro()
+        
+        Button: #botão suplementação
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.50}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_suple()
+        
+        Button: #botão materiais
+            background_color: 0,0,0,0
+            pos_hint:{"left": 1, "y":0.25}
+            size_hint: 0.216, 0.25
+            on_release:
+                root.to_materiais()
+
+<PacienteWindow>:
+    name: "paciente"
+
+    FloatLayout:
+        Image:
+            source: 'images/telas/tela_descrição_paciente.png'
+            allow_stretch: True
+            keep_ratio: True
+        
+        Button: #botão exit
+            size_hint:0.13, 0.2
+            pos_hint: {'x':0, 'top':1}
+            background_color: 0,0,0,0
+            on_release:
+                root.paciente_to_cadastro()
+
+        Button: #Show options
+            size_hint: 0.025, 0.1
+            pos_hint: {'x': 0.961277906081601, 'y': 0.887538626609443}
+            background_color: 0,0,0,0
+            on_release:
+                root.options_menu()
+        
+        Label:
+            id: label_nome
+            size_hint: 0.798, 0.1
+            halign: "right" 
+            color: 0,0,0,1
+            pos_hint: {"x": 0.147036181678214, "y": 0.8297567954220315}
+            font_size: 50 #nome maior que 40: font_size = 40 
+            text_size: self.width, None
+            halign: "center"
+
+        Label:
+            id: label_conjugue
+            size_hint: 0.4, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.0962278675904542, "y": 0.6625}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_cpf
+            size_hint: 0.2, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.053117782909930716, "y": 0.547}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_data_de_nascimento
+            size_hint: 0.12, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.2178598922247883, "y": 0.4289}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_dependentes
+            size_hint: 0.34, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.14549653579676675, "y": 0.31}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_telefone
+            size_hint: 0.2, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.10161662817551963, "y": 0.19}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_telefone_fixo
+            size_hint: 0.15, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.14780600461893764, "y": 0.075}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_endereço
+            size_hint: 0.45, 0.185
+            color: 0,0,0,1
+            pos_hint: {"x": 0.5257890685142417, "y": 0.5221745350500715}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_sus
+            size_hint: 0.4, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.565050038491147, "y": 0.429}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_ca
+            size_hint: 0.42, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.5542725173210161, "y": 0.31}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_tratamento
+            size_hint: 0.33, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.6466512702078522, "y": 0.19259}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_data_de_cadastro
+            size_hint: 0.12, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.6997690531177829, "y": 0.0735}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+<PacienteFalecidoWindow>:
+    name: "pacientefalecido"
+
+    FloatLayout:
+        Image:
+            source: 'images/telas/tela_descrição_paciente_falecido.png'
+            allow_stretch: True
+            keep_ratio: True
+        
+        Button: #botão exit
+            size_hint:0.13, 0.2
+            pos_hint: {'x':0, 'top':1}
+            background_color: 0,0,0,0
+            on_release:
+                root.paciente_to_cadastro()
+
+        Button: #Show options
+            size_hint: 0.025, 0.1
+            pos_hint: {'x': 0.961277906081601, 'y': 0.887538626609443}
+            background_color: 0,0,0,0
+            on_release:
+                root.options_menu()
+        
+        Label:
+            id: label_fnome
+            size_hint: 0.798, 0.1
+            halign: "right" 
+            color: 0,0,0,1
+            pos_hint: {"x": 0.147036181678214, "y": 0.8297567954220315}
+            font_size: 50 #nome maior que 40: font_size = 40 
+            text_size: self.width, None
+            halign: "center"
+
+        Label:
+            id: label_fconjugue
+            size_hint: 0.4, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.0962278675904542, "y": 0.6625}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_fcpf
+            size_hint: 0.2, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.053117782909930716, "y": 0.547}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_fdata_de_nascimento
+            size_hint: 0.12, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.2178598922247883, "y": 0.4289}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_fdependentes
+            size_hint: 0.34, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.14549653579676675, "y": 0.31}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_ftelefone
+            size_hint: 0.2, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.10161662817551963, "y": 0.19}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_ftelefone_fixo
+            size_hint: 0.15, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.14780600461893764, "y": 0.075}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_fendereço
+            size_hint: 0.45, 0.185
+            color: 0,0,0,1
+            pos_hint: {"x": 0.5257890685142417, "y": 0.5221745350500715}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_fsus
+            size_hint: 0.4, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.565050038491147, "y": 0.429}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_fca
+            size_hint: 0.42, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.5542725173210161, "y": 0.31}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_ftratamento
+            size_hint: 0.33, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.6466512702078522, "y": 0.19259}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+        Label:
+            id: label_fdata_de_cadastro
+            size_hint: 0.12, 0.08
+            color: 0,0,0,1
+            pos_hint: {"x": 0.6997690531177829, "y": 0.0735}
+            font_size: 35
+            text_size: self.width, None
+            halign: "left"
+
+<DescriçãoMateriaisWindow>:
+    name: "descriçãomateriais"
+
+    FloatLayout:
+        Image:
+            source: 'images/telas/tela_descrição_material.png'
+            allow_stretch: True
+            keep_ratio: True
+        
+        Button:
+            size_hint:0.13, 0.2
+            pos_hint: {'x':0, 'top':1}
+            background_color: 0,0,0,0
+            on_release:
+                app.root.current = "materiais"
+
+        Button: #Show options
+            size_hint: 0.025, 0.1
+            pos_hint: {'x': 0.961277906081601, 'y': 0.887538626609443}
+            background_color: 0,0,0,0
+            on_release:
+                root.options_menu()
+
+        Label:
+            id: label_material_nome
+            text: ""
+            size_hint: 0.9, 0.1
+            halign: "left"
+            color: 0,0,0,1
+            pos_hint: {"x": 0.10468822170900693, "y": 0.6359298998569385}
+            font_size: 50
+            text_size: self.width, None
+            background_color: 0,0,0,1
+
+        Label:
+            id: label_material_doador
+            text: ""
+            size_hint: 0.86, 0.1
+            halign: "left"
+            color: 0,0,0,1
+            pos_hint: {"x": 0.14471901462663588, "y": 0.4857153075822603}
+            font_size: 50
+            text_size: self.width, None
+            background_color: 0,0,0,1
+        
+        Label:
+            id: label_material_conservação
+            text: ""
+            size_hint: 0.61, 0.1
+            halign: "left"
+            color: 0,0,0,1
+            pos_hint: {"x": 0.3972209391839877, "y": 0.3340701001430615}
+            font_size: 50
+            text_size: self.width, None
+            background_color: 0,0,0,1
+
+        Label:
+            id: label_material_recepção
+            text: ""
+            size_hint: 0.69, 0.1
+            halign: "left"
+            color: 0,0,0,1
+            pos_hint: {"x": 0.3110007698229407, "y": 0.18242489270386265}
+            font_size: 50
+            text_size: self.width, None
+            background_color: 0,0,0,1
+
+        Label:
+            id: label_material_emprestado
+            text: ""
+            size_hint: 0.78, 0.1
+            halign: "left"
+            color: 0,0,0,1
+            pos_hint: {"x": 0.22093148575827558, "y": 0.033640915593705314}
+            font_size: 50
+            text_size: self.width, None
