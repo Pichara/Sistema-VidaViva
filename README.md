@@ -1,6 +1,8 @@
 # Sistema VidaViva
 A Patient, Supplementation and Materials registration program to the Cancer NGO, Vida Viva. Located at Campos Gerais, Brazil.
 
+Most of the program's features rely on local data storage due to the absence of internet connection in the intended usage area.
+
 The program was a donation made exclusively to resolve the issue of paper registration at Vida Viva.
 
 ## Layout
