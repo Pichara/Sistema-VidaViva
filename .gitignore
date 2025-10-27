@@ -1,0 +1,23 @@
+#Virtual Environments
+.venv/
+venv/
+env/
+
+#Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+#Build
+build/
+dist/
+*.spec
+
+#IDE
+.vscode/
+
+#Temps
+.DS_Store
+Thumbs.db
